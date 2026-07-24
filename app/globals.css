@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-earth-50 text-sea-900 antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto max-w-6xl px-5 sm:px-8;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md bg-sea-600 px-5 py-2.5 text-white font-medium hover:bg-sea-700 transition-colors disabled:opacity-50;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-md border border-sea-600 px-5 py-2.5 text-sea-700 font-medium hover:bg-sea-50 transition-colors disabled:opacity-50;
+  }
+  .card {
+    @apply rounded-2xl bg-white p-6 shadow-sm ring-1 ring-sea-100;
+  }
+  .section-title {
+    @apply text-3xl sm:text-4xl font-bold text-sea-800;
+  }
+  .section-sub {
+    @apply mt-3 text-sea-700 max-w-2xl;
+  }
+  .input {
+    @apply w-full rounded-md border border-sea-200 bg-white px-3 py-2 text-sea-900 focus:border-sea-500 focus:outline-none;
+  }
+  .label {
+    @apply block text-sm font-medium text-sea-800 mb-1;
+  }
+  .prose-post h2 {
+    @apply text-xl font-bold text-sea-800 mt-6 mb-2;
+  }
+  .prose-post h3 {
+    @apply text-lg font-bold text-sea-800 mt-5 mb-2;
+  }
+  .prose-post p {
+    @apply my-3 leading-relaxed text-sea-800;
+  }
+  .prose-post ul {
+    @apply my-3 list-disc pl-5 space-y-1 text-sea-800;
+  }
+  .prose-post ol {
+    @apply my-3 list-decimal pl-5 space-y-1 text-sea-800;
+  }
+  .prose-post strong {
+    @apply font-bold text-sea-900;
+  }
+}
