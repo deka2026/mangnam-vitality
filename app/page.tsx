@@ -28,7 +28,7 @@ export default function Home() {
     <>
       <section className="bg-sea-50 border-b border-sea-100">
         <div className="container-page py-16 lg:py-20">
-          <p className="text-sea-600 font-semibold">전라남도 완도군 · 어촌신활력증진사업</p>
+          <p className="text-sea-600 font-semibold">전남광주통합특별시 완도군 · 어촌신활력증진사업</p>
           <h1 className="mt-2 section-title">
             망남생활권
             <br />
