@@ -22,8 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="lg:pl-64 min-h-screen flex flex-col">
           <main className="flex-1">{children}</main>
           <footer className="border-t border-sea-100 bg-white">
-            <div className="container-page py-6 text-xs text-sea-600">
-              © 망남생활권 어촌신활력증진사업 · 전남광주통합특별시 완도군 완도읍 망남리
+            <div className="container-page py-6 text-xs text-sea-600 flex flex-wrap justify-between gap-2">
+              <span>© 망남생활권 어촌신활력증진사업 · 전남광주통합특별시 완도군 완도읍 망남리</span>
+              <a href="https://sakyowon.poomasi.org/admin.html" rel="nofollow" className="hover:text-sea-900">통합 관리자</a>
             </div>
           </footer>
         </div>
