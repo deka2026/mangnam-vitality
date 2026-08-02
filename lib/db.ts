@@ -1,6 +1,7 @@
 import Database from "better-sqlite3";
 import path from "path";
 import fs from "fs";
+import { seedIfEmpty } from "./seed";
 
 const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), "data");
 export const UPLOAD_DIR = path.join(DATA_DIR, "uploads");
@@ -14,6 +15,7 @@ export function db(): Database.Database {
   _db = new Database(path.join(DATA_DIR, "app.db"));
   _db.pragma("journal_mode = WAL");
   migrate(_db);
+  seedIfEmpty(_db);
   return _db;
 }
 

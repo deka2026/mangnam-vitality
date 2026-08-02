@@ -8,6 +8,7 @@ const sections = [
   {
     title: "사업",
     links: [
+      { href: "/about", label: "사업 안내" },
       { href: "/news", label: "사업소식·성과" },
       { href: "/insta", label: "인스타 홍보콘텐츠" },
     ],
