@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 const KINDS = ["방문", "사업", "기타"] as const;
+const IS_STATIC = process.env.NEXT_PUBLIC_STATIC === "1";
 
 export default function InquiryForm() {
   const [kind, setKind] = useState<string>("방문");
@@ -37,6 +38,29 @@ export default function InquiryForm() {
       setError(err instanceof Error ? err.message : "접수에 실패했습니다.");
     }
   };
+
+  // 정적(홍보판) 배포에서는 접수 서버가 없어 사교원 문의폼으로 안내
+  if (IS_STATIC) {
+    return (
+      <div className="card text-center py-10">
+        <h3 className="font-bold text-sea-800 text-lg">방문·사업 문의</h3>
+        <p className="mt-2 text-sm text-sea-700">
+          이 페이지의 온라인 문의 접수는 정식 사이트 개설과 함께 열립니다.
+          <br />
+          그동안은 사교원 문의 창구를 이용해 주세요 — 담당자가 확인 후
+          연락드립니다.
+        </p>
+        <a
+          href="https://sakyowon.poomasi.org/#/contact"
+          target="_blank"
+          rel="noopener"
+          className="btn-primary mt-5 inline-block"
+        >
+          사교원 문의폼으로 →
+        </a>
+      </div>
+    );
+  }
 
   if (state === "done") {
     return (

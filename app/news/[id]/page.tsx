@@ -5,6 +5,15 @@ import { renderMarkdown } from "@/lib/markdown";
 
 export const dynamic = "force-dynamic";
 
+// 정적(홍보판) 빌드에서 시드된 소식 글을 미리 생성 (서버 모드에선 force-dynamic이 우선)
+export function generateStaticParams() {
+  if (process.env.STATIC_EXPORT !== "1") return [];
+  const posts = db()
+    .prepare("SELECT id FROM posts WHERE published=1")
+    .all() as { id: number }[];
+  return posts.map((p) => ({ id: String(p.id) }));
+}
+
 interface Post {
   id: number;
   title: string;

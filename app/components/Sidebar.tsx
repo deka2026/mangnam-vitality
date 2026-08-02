@@ -129,12 +129,14 @@ export default function Sidebar() {
           </div>
         </nav>
 
-        <Link
-          href="/admin"
-          className="btn-outline mt-6 w-full text-sm"
-        >
-          🔐 관리자 로그인
-        </Link>
+        {process.env.NEXT_PUBLIC_STATIC !== "1" && (
+          <Link
+            href="/admin"
+            className="btn-outline mt-6 w-full text-sm"
+          >
+            🔐 관리자 로그인
+          </Link>
+        )}
       </aside>
     </>
   );
