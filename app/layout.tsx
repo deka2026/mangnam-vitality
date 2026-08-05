@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <footer className="border-t border-sea-100 bg-white">
             <div className="container-page py-6 text-xs text-sea-600 flex flex-wrap justify-between gap-2">
               <span>© 망남생활권 어촌신활력증진사업 · 전남광주통합특별시 완도군 완도읍 망남리</span>
-              <a href="https://sakyowon.poomasi.org/admin.html" rel="nofollow" className="hover:text-sea-900">통합 관리자</a>
+              <a href="https://sakyowon.poomasi.org/admin.html" rel="nofollow" className="inline-flex items-center rounded-full border border-sea-200 px-3 py-0.5 hover:bg-sea-50 hover:text-sea-900">🔐 통합 관리자</a>
             </div>
           </footer>
         </div>
