@@ -8,6 +8,7 @@ const links = [
   { href: "/admin", label: "🏠 대시보드" },
   { href: "/admin/inquiries", label: "📨 문의 관리" },
   { href: "/admin/posts", label: "📰 소식·홍보글" },
+  { href: "/admin/docs", label: "📄 기획안·보고서" },
   { href: "/admin/kpis", label: "📊 KPI 성과" },
   { href: "/admin/media", label: "📷 사진·영상" },
   { href: "/admin/insta", label: "📸 인스타 콘텐츠" },

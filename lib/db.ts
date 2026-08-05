@@ -113,6 +113,19 @@ function migrate(d: Database.Database) {
       key TEXT PRIMARY KEY,
       value TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS docs (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      doc_type TEXT NOT NULL DEFAULT '기획안',      -- 기획안 | 보고서 | 공문 | 보도자료 | 자유양식
+      title TEXT NOT NULL,
+      subtitle TEXT,                                -- 제목 아래 한 줄 (작성일·작성 주체)
+      keywords TEXT,
+      content TEXT NOT NULL,                        -- markdown (한글파일 변환 원본)
+      source_files TEXT,                            -- JSON: 업로드한 참고자료 파일명 목록
+      knowledge_used TEXT,                          -- JSON: 사용한 지식 문서 이름 목록
+      created_at TEXT NOT NULL DEFAULT (datetime('now','localtime')),
+      updated_at TEXT NOT NULL DEFAULT (datetime('now','localtime'))
+    );
   `);
 }
 

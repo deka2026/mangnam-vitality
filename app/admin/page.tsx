@@ -13,6 +13,7 @@ export default function AdminDashboard() {
   const stats = [
     { label: "미답변 문의", value: count("SELECT COUNT(*) n FROM inquiries WHERE answer IS NULL"), href: "/admin/inquiries" },
     { label: "게시된 소식", value: count("SELECT COUNT(*) n FROM posts WHERE published=1"), href: "/admin/posts" },
+    { label: "작성한 문서", value: count("SELECT COUNT(*) n FROM docs"), href: "/admin/docs" },
     { label: "사진·영상", value: count("SELECT COUNT(*) n FROM media"), href: "/admin/media" },
     { label: "등록 주민", value: count("SELECT COUNT(*) n FROM residents"), href: "/admin/residents" },
     { label: "예산 항목", value: count("SELECT COUNT(*) n FROM budget_items"), href: "/admin/budget" },
