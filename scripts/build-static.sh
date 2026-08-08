@@ -1,5 +1,5 @@
 #!/bin/bash
-# 정적 홍보판 빌드 — GitHub Pages(deka2026.github.io/mangnam-vitality)용.
+# 정적 홍보판 빌드 — GitHub Pages(sakyowon.co.kr/mangnam-vitality)용.
 # 서버 전용 라우트(api·admin·login)를 잠시 치우고, force-dynamic을 걷어낸 뒤
 # STATIC_EXPORT=1 로 out/ 을 생성한다. 끝나면 원상복구(작업트리를 건드는 건 임시).
 set -e

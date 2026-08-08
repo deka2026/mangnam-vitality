@@ -119,7 +119,7 @@ export default function Sidebar() {
               사교원 사이트 허브 ↗
             </a>
             <a
-              href="https://deka2026.github.io/mangnam-coop/"
+              href="https://sakyowon.co.kr/mangnam-coop/"
               target="_blank"
               rel="noopener"
               className="block rounded-md px-3 py-2 text-sm text-sea-600 hover:bg-sea-50"

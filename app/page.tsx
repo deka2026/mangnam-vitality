@@ -98,7 +98,7 @@ export default function Home() {
         <p className="mt-4 text-xs text-sea-600">
           ※ 마을 주민 조직의 자체 사업은{" "}
           <a
-            href="https://deka2026.github.io/mangnam-coop/"
+            href="https://sakyowon.co.kr/mangnam-coop/"
             target="_blank"
             rel="noopener"
             className="underline"
