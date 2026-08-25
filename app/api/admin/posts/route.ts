@@ -5,14 +5,14 @@ import { requireAdmin } from "@/lib/api";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const rows = db().prepare("SELECT * FROM posts ORDER BY id DESC LIMIT 100").all();
   return NextResponse.json({ posts: rows });
 }
 
 export async function POST(req: NextRequest) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const { title, summary, content, published, source_report } = await req
     .json()

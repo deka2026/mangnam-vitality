@@ -15,7 +15,7 @@ interface DocRow {
 
 /** 문서를 한글(HWPX) 파일로 변환해 내려준다 */
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const doc = db().prepare("SELECT * FROM docs WHERE id=?").get(params.id) as DocRow | undefined;
   if (!doc) return NextResponse.json({ error: "문서를 찾을 수 없습니다." }, { status: 404 });

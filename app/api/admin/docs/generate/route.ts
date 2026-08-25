@@ -14,7 +14,7 @@ export const maxDuration = 300;
  * 키워드를 바탕으로 Claude 가 행정 문서 초안을 만들어 docs 에 저장한다.
  */
 export async function POST(req: NextRequest) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   if (!aiEnabled()) {
     return NextResponse.json(

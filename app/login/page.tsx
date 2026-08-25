@@ -49,6 +49,15 @@ export default function LoginPage() {
             {busy ? "확인 중..." : "로그인"}
           </button>
         </form>
+        <p className="mt-4 text-xs text-sea-600">
+          <a
+            href="https://sakyowon.co.kr/admin.html"
+            className="font-medium text-sea-700 underline"
+          >
+            사교원 통합 계정으로 로그인
+          </a>
+          하면 비밀번호 없이 이 관리자 화면에 들어올 수 있습니다.
+        </p>
       </div>
     </div>
   );

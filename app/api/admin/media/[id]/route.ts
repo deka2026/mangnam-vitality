@@ -7,7 +7,7 @@ import fs from "fs";
 export const dynamic = "force-dynamic";
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const { caption } = await req.json().catch(() => ({}));
   db().prepare("UPDATE media SET caption=? WHERE id=?").run(caption || null, Number(params.id));
@@ -15,7 +15,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 }
 
 export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const row = db().prepare("SELECT filename FROM media WHERE id=?").get(Number(params.id)) as
     | { filename: string }

@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 /** 문서 수정 (제목·부제·본문·종류) */
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const body = await req.json().catch(() => null);
   if (!body) return NextResponse.json({ error: "잘못된 요청" }, { status: 400 });
@@ -30,7 +30,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 }
 
 export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   db().prepare("DELETE FROM docs WHERE id=?").run(params.id);
   return NextResponse.json({ ok: true });

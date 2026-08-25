@@ -4,8 +4,8 @@ import AdminNav from "./AdminNav";
 
 export const dynamic = "force-dynamic";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  if (!isAdmin()) redirect("/login");
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  if (!(await isAdmin())) redirect("/login");
   return (
     <div className="min-h-screen">
       <AdminNav />

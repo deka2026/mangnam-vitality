@@ -11,7 +11,7 @@ const IMAGE_EXT = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
 const VIDEO_EXT = [".mp4", ".webm", ".mov"];
 
 export async function GET() {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   return NextResponse.json({
     media: db().prepare("SELECT * FROM media ORDER BY id DESC LIMIT 200").all(),
@@ -19,7 +19,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const form = await req.formData().catch(() => null);
   if (!form) return NextResponse.json({ error: "잘못된 요청" }, { status: 400 });

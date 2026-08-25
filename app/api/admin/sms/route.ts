@@ -6,7 +6,7 @@ import { sendSms, smsConfigured } from "@/lib/sms";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   return NextResponse.json({
     configured: smsConfigured(),
@@ -15,7 +15,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const { recipients, message } = await req.json().catch(() => ({}));
   if (!Array.isArray(recipients) || !recipients.length) {

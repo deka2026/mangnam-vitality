@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 /** 문서 목록 */
 export async function GET() {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const docs = db()
     .prepare("SELECT * FROM docs ORDER BY id DESC")
@@ -16,7 +16,7 @@ export async function GET() {
 
 /** 직접 작성한 문서 저장 (AI 미사용) */
 export async function POST(req: NextRequest) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const body = await req.json().catch(() => null);
   if (!body?.title?.trim() || !body?.content?.trim()) {

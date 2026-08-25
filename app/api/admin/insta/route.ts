@@ -5,7 +5,7 @@ import { requireAdmin } from "@/lib/api";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   return NextResponse.json({
     contents: db()
@@ -21,7 +21,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const { title, body, media_id, insta_url } = await req.json().catch(() => ({}));
   if (!title?.trim()) {
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
 
 // 설정 저장 (인스타 계정, 캘린더 ICS 주소)
 export async function PUT(req: NextRequest) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const { insta_account, ics_url } = await req.json().catch(() => ({}));
   if (insta_account !== undefined) setSetting("insta_account", String(insta_account).trim());

@@ -7,7 +7,7 @@ export const maxDuration = 300;
 
 // 사업결과보고서(텍스트/PDF)를 받아 블로그형 홍보글 초안을 생성한다.
 export async function POST(req: NextRequest) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   if (!aiEnabled()) {
     return NextResponse.json(

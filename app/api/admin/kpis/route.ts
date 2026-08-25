@@ -5,7 +5,7 @@ import { requireAdmin } from "@/lib/api";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   return NextResponse.json({
     kpis: db().prepare("SELECT * FROM kpis ORDER BY sort, id").all(),
@@ -13,7 +13,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const { label, value, unit, note, sort } = await req.json().catch(() => ({}));
   if (!label?.trim() || !String(value ?? "").trim()) {

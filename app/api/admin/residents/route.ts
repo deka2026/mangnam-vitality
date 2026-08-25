@@ -6,7 +6,7 @@ import { parseResidentsExcel } from "@/lib/excel";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const d = db();
   return NextResponse.json({
@@ -16,7 +16,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const form = await req.formData().catch(() => null);
   const file = form?.get("file") as File | null;
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE() {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   const d = db();
   d.prepare("DELETE FROM resident_relations").run();

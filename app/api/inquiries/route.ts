@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
-  if (!isAdmin()) return NextResponse.json({ error: "권한 없음" }, { status: 401 });
+  if (!(await isAdmin())) return NextResponse.json({ error: "권한 없음" }, { status: 401 });
   const rows = db()
     .prepare("SELECT * FROM inquiries ORDER BY id DESC LIMIT 200")
     .all();
