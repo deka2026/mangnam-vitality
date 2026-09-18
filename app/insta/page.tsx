@@ -18,7 +18,7 @@ export default function InstaPage() {
     .prepare(
       `SELECT ic.*, m.filename, m.kind
        FROM insta_contents ic LEFT JOIN media m ON m.id = ic.media_id
-       ORDER BY ic.id DESC LIMIT 30`
+       ORDER BY ic.id DESC LIMIT 60`
     )
     .all() as InstaContent[];
   const instaAccount = getSetting("insta_account");
