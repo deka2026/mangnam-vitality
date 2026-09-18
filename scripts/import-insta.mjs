@@ -7,6 +7,10 @@
  *   node scripts/import-insta.mjs --dry-run  # 무엇이 등록될지만 출력
  *   node scripts/import-insta.mjs --account @mangnam_people   # 인스타 계정 설정까지
  *
+ * ⚠ 셸의 node 버전이 node_modules를 빌드할 때와 다르면 better-sqlite3가
+ *   ERR_DLOPEN_FAILED(NODE_MODULE_VERSION 불일치)로 죽는다. 그럴 땐 npm rebuild 하지 말고
+ *   (돌아가는 서비스가 쓰는 모듈이 깨진다) `bash scripts/import-insta.sh` 를 쓸 것 — sqlite3 CLI로 넣는다.
+ *
  * 같은 제목이 이미 있으면 건너뛴다(여러 번 돌려도 중복 생성되지 않음).
  * 관리자가 사이트에서 고친 내용은 덮어쓰지 않는다.
  * 사진은 붙이지 않는다 — 관리자 화면에서 항목별로 연결하면 된다.
