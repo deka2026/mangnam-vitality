@@ -36,9 +36,11 @@ export default function AdminInsta() {
   const [form, setForm] = useState(EMPTY);
   const [plans, setPlans] = useState<Plan[]>([]);
   const [planAi, setPlanAi] = useState(false);
-  const [busy, setBusy] = useState<"" | "save" | "plan" | "setting">("");
+  const [busy, setBusy] = useState<"" | "save" | "plan" | "setting" | "edit">("");
   const [msg, setMsg] = useState("");
   const [planMsg, setPlanMsg] = useState("");
+  const [editing, setEditing] = useState<number | null>(null);
+  const [editForm, setEditForm] = useState(EMPTY);
 
   const load = async () => {
     const res = await fetch("/api/admin/insta");
@@ -90,6 +92,39 @@ export default function AdminInsta() {
   const removeContent = async (id: number) => {
     if (!confirm("이 콘텐츠를 삭제할까요?")) return;
     await fetch(`/api/admin/insta/${id}`, { method: "DELETE" });
+    await load();
+  };
+
+  const startEdit = (c: Content) => {
+    setEditing(c.id);
+    setEditForm({
+      title: c.title,
+      body: c.body ?? "",
+      media_id: c.media_id ?? 0,
+      insta_url: c.insta_url ?? "",
+    });
+    setMsg("");
+  };
+
+  const saveEdit = async (id: number) => {
+    if (!editForm.title.trim()) {
+      setMsg("제목을 입력해 주세요.");
+      return;
+    }
+    setBusy("edit");
+    const res = await fetch(`/api/admin/insta/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...editForm, media_id: editForm.media_id || null }),
+    });
+    setBusy("");
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      setMsg(`❌ ${data.error || "수정 실패"}`);
+      return;
+    }
+    setEditing(null);
+    setMsg("✅ 수정했습니다.");
     await load();
   };
 
@@ -242,25 +277,110 @@ export default function AdminInsta() {
       </div>
 
       {/* 목록 */}
-      <div className="mt-6 space-y-2">
-        {contents.map((c) => (
-          <div key={c.id} className="card flex items-center justify-between gap-3 py-4">
-            <div className="min-w-0">
-              <p className="font-bold text-sea-900 truncate">{c.title}</p>
-              <p className="text-xs text-sea-500">
-                {c.created_at}
-                {c.filename && " · 미디어 연결됨"}
-                {c.insta_url && " · 인스타 링크"}
-              </p>
+      <p className="mt-6 text-sm text-sea-600">
+        등록된 콘텐츠 {contents.length}건 — [수정]을 누르면 제목·본문·사진·링크를 바로 고칠 수 있습니다.
+      </p>
+      <div className="mt-2 space-y-2">
+        {contents.map((c) =>
+          editing === c.id ? (
+            /* 수정 중 */
+            <div key={c.id} className="card ring-2 ring-sea-300">
+              <div className="space-y-3">
+                <div>
+                  <label className="label">제목 *</label>
+                  <input
+                    className="input"
+                    value={editForm.title}
+                    onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label className="label">캡션/본문</label>
+                  <textarea
+                    className="input"
+                    rows={8}
+                    value={editForm.body}
+                    onChange={(e) => setEditForm({ ...editForm, body: e.target.value })}
+                  />
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div>
+                    <label className="label">사진/영상 연결</label>
+                    <select
+                      className="input"
+                      value={editForm.media_id}
+                      onChange={(e) =>
+                        setEditForm({ ...editForm, media_id: Number(e.target.value) })
+                      }
+                    >
+                      <option value={0}>없음</option>
+                      {media.map((m) => (
+                        <option key={m.id} value={m.id}>
+                          #{m.id} {m.kind === "video" ? "🎬" : "🖼"} {m.caption || m.filename}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="label">인스타 게시물 링크 (선택)</label>
+                    <input
+                      className="input"
+                      value={editForm.insta_url}
+                      onChange={(e) => setEditForm({ ...editForm, insta_url: e.target.value })}
+                      placeholder="https://www.instagram.com/p/..."
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    className="btn-primary"
+                    onClick={() => saveEdit(c.id)}
+                    disabled={busy === "edit"}
+                  >
+                    {busy === "edit" ? "저장 중..." : "저장"}
+                  </button>
+                  <button
+                    className="rounded-md px-3 py-1.5 text-sm text-sea-600 hover:bg-sea-50"
+                    onClick={() => setEditing(null)}
+                  >
+                    취소
+                  </button>
+                </div>
+              </div>
             </div>
-            <button
-              className="shrink-0 rounded-md px-3 py-1.5 text-sm text-red-500 hover:bg-red-50"
-              onClick={() => removeContent(c.id)}
-            >
-              삭제
-            </button>
-          </div>
-        ))}
+          ) : (
+            /* 평소 */
+            <div key={c.id} className="card flex items-start justify-between gap-3 py-4">
+              <div className="min-w-0">
+                <p className="font-bold text-sea-900">{c.title}</p>
+                {c.body && (
+                  <p className="mt-1 line-clamp-2 text-sm text-sea-700 whitespace-pre-line">
+                    {c.body}
+                  </p>
+                )}
+                <p className="mt-1 text-xs text-sea-500">
+                  {c.created_at}
+                  {c.filename && " · 미디어 연결됨"}
+                  {c.insta_url && " · 인스타 링크"}
+                </p>
+              </div>
+              <div className="flex shrink-0 gap-1">
+                <button
+                  className="rounded-md px-3 py-1.5 text-sm text-sea-600 hover:bg-sea-50"
+                  onClick={() => startEdit(c)}
+                >
+                  수정
+                </button>
+                <button
+                  className="rounded-md px-3 py-1.5 text-sm text-red-500 hover:bg-red-50"
+                  onClick={() => removeContent(c.id)}
+                >
+                  삭제
+                </button>
+              </div>
+            </div>
+          )
+        )}
       </div>
     </>
   );
