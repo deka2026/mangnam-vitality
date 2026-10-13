@@ -1,4 +1,6 @@
 import { db, getSetting } from "@/lib/db";
+import RegionTabs from "../components/RegionTabs";
+import { normRegion } from "@/lib/region";
 
 export const dynamic = "force-dynamic";
 
@@ -13,20 +15,22 @@ interface InstaContent {
   kind: string | null;
 }
 
-export default function InstaPage() {
+export default function InstaPage({ searchParams }: { searchParams?: { region?: string } }) {
+  const region = normRegion(searchParams?.region);
   const items = db()
     .prepare(
       `SELECT ic.*, m.filename, m.kind
        FROM insta_contents ic LEFT JOIN media m ON m.id = ic.media_id
-       ORDER BY ic.id DESC LIMIT 60`
+       WHERE ic.region=? ORDER BY ic.id DESC LIMIT 60`
     )
-    .all() as InstaContent[];
+    .all(region) as InstaContent[];
   const instaAccount = getSetting("insta_account");
 
   return (
     <>
       <section className="bg-sea-50 border-b border-sea-100">
-        <div className="container-page py-14">
+        <div className="container-page pt-8"><RegionTabs region={region} base="/insta" /></div>
+        <div className="container-page py-10">
           <p className="text-sea-600 font-semibold">홍보</p>
           <h1 className="mt-2 section-title">인스타 홍보콘텐츠</h1>
           <p className="section-sub">

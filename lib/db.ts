@@ -15,6 +15,10 @@ export function db(): Database.Database {
   _db = new Database(path.join(DATA_DIR, "app.db"));
   _db.pragma("journal_mode = WAL");
   migrate(_db);
+  // 2026-10-13 사업지(지역) 축 — 망남/양양. 기존 자료는 전부 망남.
+  for (const t of ["posts","kpis","budget_items","residents","media","insta_contents","inquiries"]) {
+    try { _db.exec(`ALTER TABLE ${t} ADD COLUMN region TEXT NOT NULL DEFAULT '망남'`); } catch {}
+  }
   seedIfEmpty(_db);
   return _db;
 }

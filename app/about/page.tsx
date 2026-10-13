@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 
+import RegionTabs from "../components/RegionTabs";
+import { normRegion } from "@/lib/region";
+
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "사업 안내 — 망남생활권 어촌신활력증진사업",
   description:
@@ -63,9 +68,38 @@ const UNITS = [
   },
 ];
 
-export default function AboutPage() {
+export default function AboutPage({ searchParams }: { searchParams?: { region?: string } }) {
+  const region = normRegion(searchParams?.region);
+  if (region !== "망남") {
+    return (
+      <div className="container-page py-12 space-y-8">
+        <RegionTabs region={region} base="/about" />
+        <header>
+          <p className="text-sea-600 font-semibold text-sm">사업 안내</p>
+          <h1 className="mt-1 text-3xl font-bold text-sea-900">양양 어촌신활력증진사업</h1>
+          <p className="mt-3 text-sm text-sea-700 max-w-3xl leading-relaxed">
+            강원특별자치도 양양군에서 추진하는 해양수산부 어촌신활력증진사업입니다.
+            앵커조직 사회혁신교육원 사회적협동조합(사교원)이 사업 운영을 맡아 생활서비스·
+            경제활력·어촌 기반 개선을 함께 추진합니다.
+          </p>
+        </header>
+        <section className="card">
+          <h2 className="text-lg font-bold text-sea-800">2026년 운영</h2>
+          <p className="mt-2 text-sm text-sea-700 leading-relaxed">
+            2026년 사업은 앵커조직 운영을 중심으로 진행 중입니다. 운영비·인건비 집행 현황과
+            사업 소식은 <a href="/news?region=양양" className="underline">사업소식·성과</a>에서
+            실제 자료로 확인하실 수 있습니다.
+          </p>
+        </section>
+        <p className="text-xs text-sea-500">
+          ※ 양양 사업의 세부 단위사업 안내는 사업계획 확정에 따라 채워집니다. 현재는 운영·집행 현황과 소식을 제공합니다.
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="container-page py-12 space-y-14">
+      <RegionTabs region={region} base="/about" />
       <header>
         <p className="text-sea-600 font-semibold text-sm">사업 안내</p>
         <h1 className="mt-1 text-3xl font-bold text-sea-900">

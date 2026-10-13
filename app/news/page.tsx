@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
+import RegionTabs from "../components/RegionTabs";
+import { normRegion } from "@/lib/region";
 
 export const dynamic = "force-dynamic";
 
@@ -23,15 +25,16 @@ interface Media {
   caption: string | null;
 }
 
-export default function NewsPage() {
+export default function NewsPage({ searchParams }: { searchParams?: { region?: string } }) {
+  const region = normRegion(searchParams?.region);
   const posts = db()
     .prepare(
-      "SELECT id, title, summary, created_at FROM posts WHERE published=1 ORDER BY id DESC LIMIT 10"
+      "SELECT id, title, summary, created_at FROM posts WHERE published=1 AND region=? ORDER BY id DESC LIMIT 10"
     )
-    .all() as Post[];
+    .all(region) as Post[];
   const kpis = db()
-    .prepare("SELECT * FROM kpis ORDER BY sort, id")
-    .all() as Kpi[];
+    .prepare("SELECT * FROM kpis WHERE region=? ORDER BY sort, id")
+    .all(region) as Kpi[];
   const media = db()
     .prepare("SELECT id, kind, filename, caption FROM media ORDER BY id DESC LIMIT 24")
     .all() as Media[];
@@ -39,11 +42,12 @@ export default function NewsPage() {
   return (
     <>
       <section className="bg-sea-50 border-b border-sea-100">
-        <div className="container-page py-14">
+        <div className="container-page pt-8"><RegionTabs region={region} base="/news" /></div>
+        <div className="container-page py-10">
           <p className="text-sea-600 font-semibold">사업소식</p>
           <h1 className="mt-2 section-title">사업소식 · 성과</h1>
           <p className="section-sub">
-            망남생활권 어촌신활력증진사업의 최근 활동 소식과 성과를 전해드립니다.
+            {region} 어촌신활력증진사업의 최근 활동 소식과 성과를 전해드립니다.
           </p>
         </div>
       </section>
