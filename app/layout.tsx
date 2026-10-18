@@ -16,6 +16,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
         />
+        {/* 2026-10-18 이사장 지시: 모든 상세 페이지 상단에 사교원 AI 대화창 */}
+        <script src="https://sakyowon.co.kr/ai-dock.js" defer></script>
       </head>
       <body>
         <Sidebar />
