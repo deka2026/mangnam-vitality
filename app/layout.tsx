@@ -34,7 +34,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <br />
                 사업자등록번호 397-82-00424 · 사업 : 교육, 컨설팅, IT
               </span>
+              <span className="inline-flex items-center gap-2">
+              <a href="/privacy" className="font-semibold underline hover:text-sea-900">개인정보 처리방침</a>
               <a href="https://sakyowon.co.kr/admin.html" rel="nofollow" className="inline-flex items-center rounded-full border border-sea-200 px-3 py-0.5 hover:bg-sea-50 hover:text-sea-900">🔐 통합 관리자</a>
+              </span>
             </div>
           </footer>
         </div>

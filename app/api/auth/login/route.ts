@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { adminPassword, createToken, COOKIE_NAME } from "@/lib/auth";
+import { adminPassword, createToken, COOKIE_NAME, cookieSecure } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +12,7 @@ export async function POST(req: NextRequest) {
   res.cookies.set(COOKIE_NAME, createToken(), {
     httpOnly: true,
     sameSite: "lax",
+    secure: cookieSecure(req),
     path: "/",
     maxAge: 60 * 60 * 24 * 7,
   });

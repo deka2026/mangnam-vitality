@@ -1,0 +1,10 @@
+[Unit]
+Description=망남 어촌신활력 사이트 보관기한 삭제 — 하루 한 번
+
+[Timer]
+OnCalendar=*-*-* 04:20:00
+RandomizedDelaySec=10m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

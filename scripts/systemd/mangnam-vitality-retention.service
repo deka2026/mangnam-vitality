@@ -1,0 +1,7 @@
+[Unit]
+Description=망남 어촌신활력 사이트 보관기한 지난 개인정보 삭제(문의·문자기록 1년)
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/apps/mangnam-vitality
+ExecStart=/usr/bin/python3 %h/apps/mangnam-vitality/scripts/retention.py --db %h/apps/mangnam-vitality/data/app.db

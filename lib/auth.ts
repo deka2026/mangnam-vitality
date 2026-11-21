@@ -37,6 +37,17 @@ export function verifyToken(token: string | undefined): boolean {
 
 export const COOKIE_NAME = "mangnam_admin";
 
+/**
+ * 로그인 쿠키에 Secure 를 붙일지(2026-11-21). 공개 주소는 Cloudflare 를 거친 https 뿐이다.
+ * 서버 안에서 http://127.0.0.1·localhost 로 직접 붙을 때(시험)만 빼고 늘 Secure.
+ */
+export function cookieSecure(req: { headers: Headers; nextUrl: URL }): boolean {
+  const proto = (req.headers.get("x-forwarded-proto") || "").split(",")[0].trim();
+  if (proto === "https" || req.nextUrl.protocol === "https:") return true;
+  const host = (req.headers.get("host") || "").replace(/:\d+$/, "");
+  return !["127.0.0.1", "localhost", "[::1]"].includes(host);
+}
+
 /* ── 사교원 통합 계정(SSO) ──
    sakyowon.co.kr 로그인 쿠키(sk_session, Domain=.sakyowon.co.kr)가
    vitality.sakyowon.co.kr 요청에도 실려 온다. 중앙 API로 검증해

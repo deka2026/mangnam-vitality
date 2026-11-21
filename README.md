@@ -12,8 +12,8 @@
 
 **관리자 (`/admin`, 비밀번호 로그인)**
 - 문의 확인·답변
-- 사업결과보고서(PDF/텍스트) 업로드 → Claude가 블로그형 홍보글 초안 작성 → 검토 후 게시
-- **기획안·보고서 작성** — 사업 지식자료(`data/knowledge/`) + 업로드 참고자료(자료요청 공문 등, PDF·HWP·HWPX·DOCX·XLSX·TXT) + 키워드 → Claude가 행정문서 초안 작성 → 편집 후 **한글파일(.hwpx) 다운로드**
+- 사업결과보고서(PDF/텍스트) 업로드 → 사교원 HPC 엔진이 블로그형 홍보글 초안 작성 → 검토 후 게시
+- **기획안·보고서 작성** — 사업 지식자료(`data/knowledge/`) + 업로드 참고자료(자료요청 공문 등, PDF·HWP·HWPX·DOCX·XLSX·TXT) + 키워드 → 사교원 HPC 엔진이 행정문서 초안 작성 → 편집 후 **한글파일(.hwpx) 다운로드**
 - KPI 성과 관리, 사진·영상 업로드
 - 예산집행 엑셀 업로드 → 연도별·사업별·품목별 집행실적 자동 정리
 - 주민자료 엑셀 업로드 → 주민 관계도(그래프) 표시
@@ -42,4 +42,11 @@ npm start              # http://localhost:3100
 
 - Node 20+ 필요, `npm run build` 후 `npm start` (포트 3100) 또는 systemd 서비스
 - 리버스 프록시(nginx)로 도메인 연결, 업로드 용량 고려 `client_max_body_size 200m`
-- 환경변수: `ADMIN_PASSWORD`(필수), `ANTHROPIC_API_KEY`, `ALIGO_API_KEY`/`ALIGO_USER_ID`/`SMS_SENDER`(문자), `DATA_DIR`(선택)
+- 환경변수: `ADMIN_PASSWORD`(필수), `ALIGO_API_KEY`/`ALIGO_USER_ID`/`SMS_SENDER`(문자), `DATA_DIR`(선택)
+
+## 개인정보 (2026-11-21 이사장 결정)
+
+- AI 초안은 Anthropic 을 직접 부르지 않는다. `lib/hpc.ts` → `/opt/sakyowon/tools/hpc_cli.py` → `/opt/sakyowon/hpc_route.py` 의 `연산()`(앱 `vitality`, 외부 AI 폴백 없음). 자료는 `가리기()` 로 개인정보를 「(생략)」으로 바꿔 보내고, 남으면 422 「개인정보가 들어 있어 AI 로 보내지 않았습니다」. PDF 는 서버에서 `pdftotext` 로 글자만 뽑는다. 경로 기록은 `/opt/sakyowon/data/hpc_route.jsonl`(app=vitality).
+- 문의 접수는 개인정보 수집·이용 동의(`agree: true`)가 없으면 400. 처리방침은 `/privacy`(`lib/privacy-html.ts`).
+- 사진 올리기 때 `scripts/strip_exif.py`(PIL)로 EXIF(GPS 포함)를 지우고 저장한다. 영상 메타데이터는 지우지 않는다.
+- 보관 기한: `scripts/retention.py` 가 문의(접수일)·문자 발송 기록(보낸 날) 1년 지난 줄을 지운다. systemd user 타이머 `mangnam-vitality-retention.timer`(하루 한 번).

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/api";
-import { aiEnabled, generateDocument, DOC_TYPES } from "@/lib/claude";
+import { aiEnabled, generateDocument, DOC_TYPES, HpcError } from "@/lib/ai";
 import { extractRef, ExtractedRef } from "@/lib/extract";
 import { selectKnowledge, knowledgeAvailable } from "@/lib/knowledge";
 import { db } from "@/lib/db";
@@ -11,7 +11,8 @@ export const maxDuration = 300;
 /**
  * 기획안·보고서 자동 작성.
  * 사업 지식 자료(data/knowledge/) + 업로드 참고자료(자료 요청 공문 등) +
- * 키워드를 바탕으로 Claude 가 행정 문서 초안을 만들어 docs 에 저장한다.
+ * 키워드를 바탕으로 사교원 HPC 엔진(hpc_route, 개인정보 가림·외부 AI 폴백 없음)이
+ * 행정 문서 초안을 만들어 docs 에 저장한다.
  */
 export async function POST(req: NextRequest) {
   const denied = await requireAdmin();
@@ -20,7 +21,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         error:
-          "AI 생성 기능이 아직 설정되지 않았습니다 (ANTHROPIC_API_KEY 필요). '직접 작성'으로 문서를 만들면 한글파일 변환은 그대로 쓸 수 있습니다.",
+          "AI 생성 기능(사교원 HPC 엔진 연결)을 쓸 수 없습니다. '직접 작성'으로 문서를 만들면 한글파일 변환은 그대로 쓸 수 있습니다.",
       },
       { status: 503 }
     );
@@ -92,7 +93,10 @@ export async function POST(req: NextRequest) {
     const doc = db().prepare("SELECT * FROM docs WHERE id=?").get(info.lastInsertRowid);
     return NextResponse.json({ doc, knowledge_available: knowledgeAvailable() });
   } catch (err) {
-    console.error("generate document failed:", err);
+    if (err instanceof HpcError) {
+      return NextResponse.json({ error: err.message }, { status: err.status });
+    }
+    console.error("generate document failed:", (err as Error)?.message);
     return NextResponse.json(
       { error: "AI 문서 생성 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요." },
       { status: 502 }

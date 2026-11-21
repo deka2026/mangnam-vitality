@@ -226,7 +226,7 @@ export default function AdminInsta() {
               </div>
             ))}
             {planAi && (
-              <p className="text-xs text-sea-500">🤖 Claude가 작성한 기획안입니다. 촬영 전 현장 상황에 맞게 조정하세요.</p>
+              <p className="text-xs text-sea-500">🤖 사교원 AI(HPC 엔진)가 작성한 기획안입니다. 촬영 전 현장 상황에 맞게 조정하세요.</p>
             )}
           </div>
         )}

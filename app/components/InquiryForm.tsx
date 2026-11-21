@@ -11,6 +11,7 @@ export default function InquiryForm() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [agree, setAgree] = useState(false);
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [error, setError] = useState("");
 
@@ -20,13 +21,17 @@ export default function InquiryForm() {
       setError("이름, 전화번호, 문의 내용을 입력해 주세요.");
       return;
     }
+    if (!agree) {
+      setError("개인정보 수집·이용에 동의해 주셔야 문의를 보낼 수 있습니다.");
+      return;
+    }
     setError("");
     setState("sending");
     try {
       const res = await fetch("/api/inquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ kind, name, phone, email, message }),
+        body: JSON.stringify({ kind, name, phone, email, message, agree }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -78,6 +83,7 @@ export default function InquiryForm() {
             setPhone("");
             setEmail("");
             setMessage("");
+            setAgree(false);
           }}
         >
           추가 문의하기
@@ -133,6 +139,28 @@ export default function InquiryForm() {
             placeholder="방문 희망 날짜와 인원, 궁금한 사업 내용 등을 자유롭게 적어 주세요."
           />
         </div>
+      </div>
+
+      <div className="mt-4 rounded-lg bg-sea-50 p-3 text-xs text-sea-700 leading-relaxed">
+        <p className="font-semibold text-sea-800">개인정보 수집·이용 안내</p>
+        <p className="mt-1">
+          항목: 이름·전화번호·이메일(선택)·문의 내용 / 목적: 문의 응대 / 보유: 접수일로부터 1년 뒤 삭제
+          <br />
+          동의하지 않으시면 문의를 보낼 수 없습니다.{" "}
+          <a href="/privacy" target="_blank" rel="noopener" className="underline hover:text-sea-900">
+            처리방침 보기
+          </a>
+        </p>
+        <label className="mt-2 flex items-start gap-2 text-sm text-sea-800">
+          <input
+            type="checkbox"
+            className="mt-0.5"
+            checked={agree}
+            onChange={(e) => setAgree(e.target.checked)}
+            required
+          />
+          <span>개인정보 수집·이용에 동의합니다 (필수)</span>
+        </label>
       </div>
 
       {error && <p className="mt-3 text-sm font-medium text-red-600">{error}</p>}

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/api";
 import { getSetting, setSetting } from "@/lib/db";
 import { fetchCalendarEvents } from "@/lib/ics";
-import { aiEnabled, generateStoryPlans, fallbackStoryPlans } from "@/lib/claude";
+import { aiEnabled, generateStoryPlans, fallbackStoryPlans, HpcError } from "@/lib/ai";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
@@ -41,8 +41,13 @@ export async function POST(req: NextRequest) {
     const plans = aiEnabled() ? await generateStoryPlans(events) : fallbackStoryPlans(events);
     return NextResponse.json({ plans, ai: aiEnabled(), eventCount: events.length });
   } catch (err) {
-    console.error("story plan failed:", err);
-    // AI 실패 시 템플릿으로라도 제공
-    return NextResponse.json({ plans: fallbackStoryPlans(events), ai: false, eventCount: events.length });
+    console.error("story plan failed:", (err as Error)?.message);
+    // AI 실패·개인정보 거절 시 템플릿으로라도 제공(템플릿은 서버 안에서만 만든다)
+    return NextResponse.json({
+      plans: fallbackStoryPlans(events),
+      ai: false,
+      eventCount: events.length,
+      notice: err instanceof HpcError ? err.message : "AI 엔진이 답하지 못해 기본 틀로 만들었습니다.",
+    });
   }
 }

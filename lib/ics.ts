@@ -1,4 +1,4 @@
-import type { CalendarEvent } from "./claude";
+import type { CalendarEvent } from "./ai";
 
 // 구글 캘린더 비공개 ICS 주소(…/basic.ics)를 받아 일정을 파싱한다.
 function unfold(text: string): string[] {

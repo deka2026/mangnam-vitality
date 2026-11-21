@@ -7,13 +7,12 @@ import * as XLSX from "xlsx";
 
 /**
  * 업로드된 참고자료 파일에서 텍스트를 뽑아낸다.
- * PDF 는 추출하지 않고 base64 로 넘겨 Claude 가 직접 읽게 한다.
+ * PDF 도 서버에서 글자만 뽑는다(pdftotext) — AI 는 사교원 HPC 엔진으로 글만 보낸다(2026-11-21).
  */
 
 export interface ExtractedRef {
   name: string;
   text?: string;
-  pdfBase64?: string;
 }
 
 const MAX_TEXT = 40000; // 파일 하나당 텍스트 상한
@@ -28,6 +27,25 @@ function hwpToText(buf: Buffer): string | null {
       PATH: `${process.env.PATH || ""}:${path.join(os.homedir(), ".local/bin")}`,
     };
     const r = spawnSync("hwp5txt", [tmp], { env, encoding: "utf-8", maxBuffer: 32 * 1024 * 1024, timeout: 60000 });
+    if (r.status === 0 && r.stdout?.trim()) return r.stdout;
+    return null;
+  } catch {
+    return null;
+  } finally {
+    fs.rmSync(tmp, { force: true });
+  }
+}
+
+/** pdftotext(poppler) 로 PDF 글자 추출. 글자가 없으면(스캔본) null */
+export function pdfToText(buf: Buffer): string | null {
+  const tmp = path.join(os.tmpdir(), `docgen-${process.pid}-${Math.random().toString(36).slice(2)}.pdf`);
+  try {
+    fs.writeFileSync(tmp, buf);
+    const r = spawnSync("pdftotext", ["-layout", "-enc", "UTF-8", tmp, "-"], {
+      encoding: "utf-8",
+      maxBuffer: 32 * 1024 * 1024,
+      timeout: 60000,
+    });
     if (r.status === 0 && r.stdout?.trim()) return r.stdout;
     return null;
   } catch {
@@ -73,7 +91,7 @@ function xlsxToText(buf: Buffer): string {
 }
 
 /**
- * 파일 → 텍스트(또는 PDF base64).
+ * 파일 → 텍스트.
  * @throws 지원하지 않는 형식이거나 추출 실패 시 사용자에게 보여줄 메시지
  */
 export async function extractRef(file: File): Promise<ExtractedRef> {
@@ -81,7 +99,11 @@ export async function extractRef(file: File): Promise<ExtractedRef> {
   const lower = name.toLowerCase();
   const buf = Buffer.from(await file.arrayBuffer());
 
-  if (lower.endsWith(".pdf")) return { name, pdfBase64: buf.toString("base64") };
+  if (lower.endsWith(".pdf")) {
+    const text = pdfToText(buf);
+    if (text) return { name, text: text.slice(0, MAX_TEXT) };
+    throw new Error(`${name}: PDF 에서 글자를 읽지 못했습니다(스캔본일 수 있음). 내용을 붙여넣어 주세요.`);
+  }
   if (/\.(txt|md|csv)$/.test(lower)) return { name, text: buf.toString("utf-8").slice(0, MAX_TEXT) };
   if (lower.endsWith(".hwpx")) {
     try {

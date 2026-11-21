@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { usingDefaultPassword } from "@/lib/auth";
-import { aiEnabled } from "@/lib/claude";
+import { aiEnabled } from "@/lib/ai";
 
 export const dynamic = "force-dynamic";
 
@@ -50,7 +50,7 @@ export default function AdminDashboard() {
           <p className="mt-1 text-sm text-sea-700">
             {aiEnabled()
               ? "사용 가능 — 보고서를 업로드하면 홍보글 초안을 자동 작성합니다."
-              : "미설정 — ANTHROPIC_API_KEY 환경변수가 필요합니다. 설정 전까지는 직접 작성 모드로 동작합니다."}
+              : "사교원 HPC 엔진 연결 도구가 없습니다. 직접 작성 모드로 동작합니다."}
           </p>
         </div>
         <div className="card">
