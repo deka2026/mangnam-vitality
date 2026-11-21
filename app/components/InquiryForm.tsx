@@ -51,7 +51,7 @@ export default function InquiryForm() {
           연락드립니다.
         </p>
         <a
-          href="https://sakyowon.poomasi.org/#/contact"
+          href="https://sakyowon.co.kr/#/ask"
           target="_blank"
           rel="noopener"
           className="btn-primary mt-5 inline-block"
