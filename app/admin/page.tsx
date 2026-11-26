@@ -30,7 +30,7 @@ export default function AdminDashboard() {
         <div className="card mt-4 bg-red-50 ring-red-200">
           <p className="text-sm font-medium text-red-700">
             ⚠️ 기본 비밀번호를 사용 중입니다. 서버 환경변수 <code>ADMIN_PASSWORD</code>를
-            설정해 주세요. (지미에게 요청)
+            설정해 주세요. (통합관리자에게 요청)
           </p>
         </div>
       )}

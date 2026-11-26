@@ -119,7 +119,7 @@ export default function AdminSms() {
           <p className="text-sm text-sea-700">
             ⚠️ SMS API가 아직 설정되지 않아 <b>시뮬레이션 모드</b>로 동작합니다. 발송
             내용은 기록만 되고 실제 문자는 나가지 않습니다. (환경변수 ALIGO_API_KEY,
-            ALIGO_USER_ID, SMS_SENDER 필요 — 지미에게 요청)
+            ALIGO_USER_ID, SMS_SENDER 필요 — 통합관리자에게 요청)
           </p>
         </div>
       )}

@@ -53,8 +53,8 @@ export default function InstaPage({ searchParams }: { searchParams?: { region?: 
         {items.length === 0 ? (
           <div className="card bg-earth-50 ring-earth-200">
             <p className="text-sm text-sea-700">
-              홍보 콘텐츠를 준비하고 있습니다. 곧 망남마을의 생생한 소식을 만나보실 수
-              있어요! 📸
+              홍보 콘텐츠를 준비하고 있습니다. 곧 망남마을의 생생한 소식을 만나 보실 수
+              있습니다.
             </p>
           </div>
         ) : (

@@ -50,9 +50,9 @@ export default function InquiryForm() {
       <div className="card text-center py-10">
         <h3 className="font-bold text-sea-800 text-lg">방문·사업 문의</h3>
         <p className="mt-2 text-sm text-sea-700">
-          이 페이지의 온라인 문의 접수는 정식 사이트 개설과 함께 열립니다.
+          이 안내 페이지에서는 온라인 문의를 받지 않습니다.
           <br />
-          그동안은 사교원 문의 창구를 이용해 주세요 — 담당자가 확인 후
+          사교원 통합사이트 문의 화면을 이용해 주세요 — 담당자가 확인한 뒤
           연락드립니다.
         </p>
         <a
@@ -61,7 +61,7 @@ export default function InquiryForm() {
           rel="noopener"
           className="btn-primary mt-5 inline-block"
         >
-          사교원 문의폼으로 →
+          사교원 통합사이트 문의로 →
         </a>
       </div>
     );

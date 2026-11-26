@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 
 import RegionTabs from "../components/RegionTabs";
 import { normRegion } from "@/lib/region";
+import { asset } from "@/lib/asset";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "사업 안내 — 망남생활권 어촌신활력증진사업",
+  title: "사업 안내 — 완도 망남생활권 어촌신활력증진사업",
   description:
-    "완도 망남리 어촌신활력증진사업의 배경, 단위사업, 운영체계, 걸어온 길을 소개합니다.",
+    "완도 망남생활권 어촌신활력증진사업의 배경, 단위사업, 운영체계, 걸어온 길을 소개합니다.",
 };
 
 const TIMELINE = [
@@ -20,7 +21,7 @@ const TIMELINE = [
   { date: "2024. 12.", label: "망남리복지센터 신축 완료 (완도군)" },
   { date: "2025. 01.~10.", label: "기본계획 심의 4회" },
   { date: "2025. 11.", label: "기본계획 수립 (완도군)" },
-  { date: "2026.", label: "거점시설(H/W) 완공 목표" },
+  { date: "2026.", label: "거점시설(건축) 완공 목표" },
 ];
 
 const UNITS = [
@@ -79,7 +80,7 @@ export default function AboutPage({ searchParams }: { searchParams?: { region?: 
           <h1 className="mt-1 text-3xl font-bold text-sea-900">양양 어촌신활력증진사업</h1>
           <p className="mt-3 text-sm text-sea-700 max-w-3xl leading-relaxed">
             강원특별자치도 양양군에서 추진하는 해양수산부 어촌신활력증진사업입니다.
-            앵커조직 사회혁신교육원 사회적협동조합(사교원)이 사업 운영을 맡아 생활서비스·
+            앵커조직 사회혁신교육원사회적협동조합(사교원)이 사업 운영을 맡아 생활서비스·
             경제활력·어촌 기반 개선을 함께 추진합니다.
           </p>
         </header>
@@ -92,7 +93,7 @@ export default function AboutPage({ searchParams }: { searchParams?: { region?: 
           </p>
         </section>
         <p className="text-xs text-sea-500">
-          ※ 양양 사업의 세부 단위사업 안내는 사업계획 확정에 따라 채워집니다. 현재는 운영·집행 현황과 소식을 제공합니다.
+          ※ 양양 사업은 운영·집행 현황과 사업 소식을 안내합니다. 궁금한 점은 첫 화면 문의로 남겨 주세요.
         </p>
       </div>
     );
@@ -106,12 +107,17 @@ export default function AboutPage({ searchParams }: { searchParams?: { region?: 
           바다와 마을을 다시 잇는 4년
         </h1>
         <p className="mt-3 text-sm text-sea-700 max-w-3xl leading-relaxed">
-          망남생활권 어촌신활력증진사업은 해양수산부가 지원하고 완도군이
+          완도 망남생활권 어촌신활력증진사업은 해양수산부가 지원하고 완도군이
           시행하는 어촌 활성화 사업입니다 (2023~2026, 총사업비 9,213백만
           원 — 국비 6,449.1 · 도비 829.17 · 군비 1,934.73백만 원). 앵커조직인
-          사회혁신교육원 사회적협동조합(사교원)이 현장에 상주하며 주민과 함께
+          사회혁신교육원사회적협동조합(사교원)이 현장에 상주하며 주민과 함께
           사업을 운영합니다.
         </p>
+        <figure className="mt-6 m-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={asset("/img/mangnam-farm-wide-02.jpg")} alt="섬과 전복 양식장이 보이는 망남 앞바다" className="w-full max-h-[360px] object-cover rounded-2xl ring-1 ring-sea-100" />
+          <figcaption className="mt-2 text-xs text-sea-500">섬과 전복 양식장이 펼쳐진 망남 앞바다</figcaption>
+        </figure>
       </header>
 
       <section>
@@ -189,7 +195,7 @@ export default function AboutPage({ searchParams }: { searchParams?: { region?: 
               기구입니다. 산하에 생활서비스분과와 경제생태계분과를 두고, 완도군
               어촌신활력팀과 부군수 중심 행정워킹그룹이 뒷받침합니다.
               교육문화스테이션은 망남새마을회가, 전복 공동작업장은
-              전복생산장영어조합법인이 운영을 맡습니다.
+              전복생산자영어조합법인이 운영을 맡습니다.
             </p>
           </div>
           <div className="card">

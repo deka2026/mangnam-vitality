@@ -3,9 +3,9 @@ import "./globals.css";
 import Sidebar from "./components/Sidebar";
 
 export const metadata: Metadata = {
-  title: "망남생활권 어촌신활력증진사업",
+  title: "완도 망남생활권 어촌신활력증진사업",
   description:
-    "전남광주통합특별시 완도군 망남생활권 어촌신활력증진사업 홍보 및 업무자동화 사이트",
+    "완도 망남생활권 어촌신활력증진사업을 소개하고 사업 소식과 성과를 알리는 사이트입니다.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -26,17 +26,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <footer className="border-t border-sea-100 bg-white">
             <div className="container-page py-6 text-xs text-sea-600 flex flex-wrap justify-between gap-2">
               <span>
-                © 망남생활권 어촌신활력증진사업 · 전남광주통합특별시 완도군 완도읍 망남리
+                © 완도 망남생활권 어촌신활력증진사업 · 전남광주통합특별시 완도군 완도읍 망남리
                 <br />
                 제작·운영 지원 :{" "}
-                <a href="https://sakyowon.co.kr/" className="underline hover:text-sea-900">사회혁신교육원 사회적협동조합</a>
+                <a href="https://sakyowon.co.kr/" className="underline hover:text-sea-900">사회혁신교육원사회적협동조합</a>
                 {" "}· 대전광역시 서구 관저중로80번길 8, 3층
                 <br />
                 사업자등록번호 397-82-00424 · 사업 : 교육, 컨설팅, IT
               </span>
               <span className="inline-flex items-center gap-2">
               <a href="/privacy" className="font-semibold underline hover:text-sea-900">개인정보 처리방침</a>
-              <a href="https://sakyowon.co.kr/admin.html" rel="nofollow" className="inline-flex items-center rounded-full border border-sea-200 px-3 py-0.5 hover:bg-sea-50 hover:text-sea-900">🔐 통합 관리자</a>
+              {process.env.NEXT_PUBLIC_STATIC !== "1" && (
+                <a href="/admin" rel="nofollow" className="text-sea-400 hover:text-sea-700">관리자 로그인</a>
+              )}
               </span>
             </div>
           </footer>

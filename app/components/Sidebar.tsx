@@ -70,7 +70,7 @@ export default function Sidebar() {
           >
             <span className="text-2xl">🐟</span>
             <span className="leading-tight text-sm">
-              망남생활권
+              완도 망남생활권
               <br />
               어촌신활력증진사업
             </span>
@@ -116,7 +116,7 @@ export default function Sidebar() {
               rel="noopener"
               className="block rounded-md px-3 py-2 text-sm font-bold text-sea-600 hover:bg-sea-50"
             >
-              사교원 사이트 허브 ↗
+              사교원 통합사이트 ↗
             </a>
             <a
               href="https://sakyowon.co.kr/mangnam-coop/"
@@ -129,14 +129,7 @@ export default function Sidebar() {
           </div>
         </nav>
 
-        {process.env.NEXT_PUBLIC_STATIC !== "1" && (
-          <Link
-            href="/admin"
-            className="btn-outline mt-6 w-full text-sm"
-          >
-            🔐 관리자 로그인
-          </Link>
-        )}
+        {/* 2026-11-27 관리자 로그인은 바닥글 작은 링크로 옮김(V-03) */}
       </aside>
     </>
   );

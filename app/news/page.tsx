@@ -77,7 +77,7 @@ export default function NewsPage({ searchParams }: { searchParams?: { region?: s
         {posts.length === 0 ? (
           <div className="card mt-5 bg-earth-50 ring-earth-200">
             <p className="text-sm text-sea-700">
-              아직 등록된 소식이 없습니다. 첫 소식을 준비하고 있어요! 🌊
+              아직 등록된 소식이 없습니다. 첫 소식을 준비하고 있습니다.
             </p>
           </div>
         ) : (
