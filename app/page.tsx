@@ -58,7 +58,7 @@ const CONTENT: Record<Region, {
       { value: "앵커조직 사교원", label: "운영 주체" },
       { value: "진행 중", label: "사업 단계" },
     ],
-    hero: { img: "/img/yangyang-hujin-stairs-01.jpg", alt: "양양 후진항 바닷가 계단길", cap: "양양 후진항 바닷가(견학 때 촬영)" },
+    hero: { img: "/img/yangyang-hujin-stairs-01.jpg", alt: "양양 견학 때 촬영한 데크길", cap: "양양 견학 때 촬영한 데크길" },
     gallery: [
       { img: "/img/yangyang-hujin-fishcenter-night-01.jpg", alt: "양양 후진항 활어센터 밤 풍경", cap: "후진항 활어센터(견학 때 촬영)" },
     ],
