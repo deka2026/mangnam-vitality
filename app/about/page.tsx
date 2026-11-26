@@ -77,7 +77,7 @@ export default function AboutPage({ searchParams }: { searchParams?: { region?: 
         <RegionTabs region={region} base="/about" />
         <header>
           <p className="text-sea-600 font-semibold text-sm">사업 안내</p>
-          <h1 className="mt-1 text-3xl font-bold text-sea-900">양양 어촌신활력증진사업</h1>
+          <h1 className="mt-1 text-3xl font-bold text-sea-900">양양군 후진항생활권 어촌신활력증진사업</h1>
           <p className="mt-3 text-sm text-sea-700 max-w-3xl leading-relaxed">
             강원특별자치도 양양군에서 추진하는 해양수산부 어촌신활력증진사업입니다.
             앵커조직 사회혁신교육원사회적협동조합(사교원)이 사업 운영을 맡아 생활서비스·

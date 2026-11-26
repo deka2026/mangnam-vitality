@@ -4,7 +4,7 @@ export type Region = (typeof REGIONS)[number];
 export const REGION_DEFAULT: Region = "망남";
 export const REGION_LABEL: Record<Region, string> = {
   망남: "망남 (완도 망남생활권)",
-  양양: "양양 (강원 양양)",
+  양양: "양양 후진항생활권 (강원 양양)",
 };
 export function normRegion(v: unknown): Region {
   const s = String(v ?? "").trim();
