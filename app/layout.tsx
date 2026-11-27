@@ -3,9 +3,9 @@ import "./globals.css";
 import Sidebar from "./components/Sidebar";
 
 export const metadata: Metadata = {
-  title: "완도 망남생활권 어촌신활력증진사업",
+  title: "망남·양양 어촌신활력증진사업 — 사교원",
   description:
-    "완도 망남생활권 어촌신활력증진사업을 소개하고 사업 소식과 성과를 알리는 사이트입니다.",
+    "완도 망남생활권 어촌신활력증진사업과 양양군 후진항생활권 어촌신활력증진사업을 소개하고 사업 소식과 성과를 알리는 사이트입니다.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

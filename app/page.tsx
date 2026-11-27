@@ -66,6 +66,12 @@ const CONTENT: Record<Region, {
   },
 };
 
+// 11-27 이사장 지시: 지역 탭에 맞춰 브라우저 탭 제목도 바꾼다
+export function generateMetadata({ searchParams }: { searchParams?: { region?: string } }) {
+  const c = CONTENT[normRegion(searchParams?.region)];
+  return { title: c.title, description: `${c.title}을 소개하고 사업 소식과 성과를 알리는 사이트입니다.` };
+}
+
 export default function Home({ searchParams }: { searchParams?: { region?: string } }) {
   const region = normRegion(searchParams?.region);
   const c = CONTENT[region];

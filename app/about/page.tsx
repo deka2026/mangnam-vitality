@@ -6,11 +6,15 @@ import { asset } from "@/lib/asset";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "사업 안내 — 완도 망남생활권 어촌신활력증진사업",
-  description:
-    "완도 망남생활권 어촌신활력증진사업의 배경, 단위사업, 운영체계, 걸어온 길을 소개합니다.",
-};
+// 11-27 이사장 지시: 양양 화면에서는 탭 제목도 양양 사업 이름으로
+export function generateMetadata({ searchParams }: { searchParams?: { region?: string } }): Metadata {
+  if (normRegion(searchParams?.region) !== "망남")
+    return { title: "사업 안내 — 양양군 후진항생활권 어촌신활력증진사업", description: "양양군 후진항생활권 어촌신활력증진사업을 소개합니다." };
+  return {
+    title: "사업 안내 — 완도 망남생활권 어촌신활력증진사업",
+    description: "완도 망남생활권 어촌신활력증진사업의 배경, 단위사업, 운영체계, 걸어온 길을 소개합니다.",
+  };
+}
 
 const TIMELINE = [
   { date: "2023. 12.", label: "주민리더 회의 — 사업의 첫걸음" },
