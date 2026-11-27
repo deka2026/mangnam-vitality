@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PRIVACY_HTML } from "@/lib/privacy-html";
 
 export const metadata: Metadata = {
-  title: "개인정보 처리방침 · 완도 망남생활권 어촌신활력증진사업",
+  title: "개인정보 처리방침 · 망남·양양 어촌신활력증진사업",
 };
 
 // 처리방침 초안(망남_처리방침_초안_20261121.html)의 꾸밈을 이 화면 안에만 적용
